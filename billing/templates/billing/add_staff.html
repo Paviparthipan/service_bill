@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Management</title>
+    <style>
+        body { font-family: Arial; background: #f4f4f4; margin: 0; padding: 0;}
+        .container { width: 500px; margin: 50px auto; background: white; padding: 20px; border-radius: 8px; }
+        input { width: 90%; padding: 8px; margin: 5px 0; }
+        button { padding: 10px 20px; margin: 10px 0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        .message { color: green; }
+        .nav{
+               background: #0077cc;
+            margin-top: 0;
+            padding: 2.5rem;
+            text-align: center;
+            color: #ccc;
+        }
+        a{
+    text-decoration: none;
+    border: 1px solid;
+    color: white;
+     background: #0077cc;
+    padding: .2rem;
+
+    &:hover{
+  background: #0867acff;
+    }
+
+
+}
+    </style>
+</head>
+<body>
+<h2 class="nav">Staff Management</h2>
+<div class="container">
+    <h3>Add Staff</h3>
+
+    {% if message %}
+        <div class="message">{{ message }}</div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="uname" placeholder="Username" required><br>
+        <input type="password" name="pwd" placeholder="Password" required><br>
+        <button type="submit">Add Staff</button>
+    </form>
+
+   <h3>Staff List</h3>
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Role</th>
+        <th>View Bills</th>
+    </tr>
+    {% for staff in staff_list %}
+    <tr>
+        <td>{{ staff.username }}</td>
+        <td>{{ staff.role }}</td>
+        <td>
+            <a href="{% url 'view_staff_bills' staff.id 'daily' %}">Daily</a> |
+            <a href="{% url 'view_staff_bills' staff.id 'weekly' %}">Weekly</a> |
+            <a href="{% url 'view_staff_bills' staff.id 'monthly' %}">Monthly</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</div>
+
+</body>
+</html>

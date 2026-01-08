@@ -1,0 +1,59 @@
+<!-- view_staff_bills.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ staff.username }} - {{ period|capfirst }} Bills</title>
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+    }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+ .nav{
+               background: #0077cc;
+            margin-top: 0;
+            padding: 2.5rem;
+            text-align: center;
+            color: #ccc;
+        }
+a{
+    text-decoration: none;
+    border: 1px solid;
+    color: white;
+    background-color: rgb(1, 131, 1);
+    padding: .5rem;
+
+    &:hover{
+ background-color: rgb(1, 156, 1);
+    }
+
+
+}
+</style>
+
+</head>
+
+<body>
+    <h2 class="nav">{{ staff.username|capfirst}} - {{ period|capfirst }} Bills</h2>
+    <a href="{% url 'add_staff' %}">Back to Staff List</a>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Customer</th>
+            <th>Service</th>
+            <th>Amount</th>
+            <th>Date</th>
+        </tr>
+        {% for bill in bills %}
+        <tr>
+            <td>{{ bill.cust_name }}</td>
+            <td>{{ bill.service_type }}</td>
+            <td>{{ bill.amount }}</td>
+            <td>{{ bill.date }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No bills found for this period.</td></tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

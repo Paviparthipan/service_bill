@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+    }
+        .nav{
+               background: #0077cc;
+            margin-top: 0;
+            padding: 2.5rem;
+            text-align: center;
+            color: #ccc;
+        }
+    a{
+        text-decoration: none;
+        color: black;
+    }
+     table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+</style>
+<body>
+    <h2 class="nav">My Bills ({{ period|title }})</h2>
+
+<a href="{% url 'staff_bills' 'daily' %}">Daily</a> |
+<a href="{% url 'staff_bills' 'weekly' %}">Weekly</a> |
+<a href="{% url 'staff_bills' 'monthly' %}">Monthly</a>
+
+<br><br>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Date</th>
+        <th>Customer</th>
+        <th>Service</th>
+        <th>Amount</th>
+    </tr>
+
+    {% for bill in bills %}
+    <tr>
+        <td>{{ bill.date }}</td>
+        <td>{{ bill.cust_name }}</td>
+        <td>{{ bill.service_type }}</td>
+        <td>{{ bill.amount }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">No bills found</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+</body>
+</html>
